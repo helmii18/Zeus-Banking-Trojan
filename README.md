@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/bd0a2db2-f05a-4edf-bde7-3bd8625e256c)![image](https://github.com/user-attachments/assets/bbbcb169-e027-409f-af7f-353e5e7afdf4)# Zeus-Banking-Trojan
+# Zeus-Banking-Trojan
 Detect and analyze the Zeus Banking Trojan using various tools and techniques, including malware simulation, network monitoring, memory analysis, and signature-based detection
 
 # Suricata
