@@ -1,0 +1,16 @@
+python2 vol.py -f zeus2x4.vmem imageinfo
+python2 vol.py -f zeus2x4.vmem —profile WinXPSP2x86 psscan
+python2 vol.py -f zeus2x4.vmem —profile WinXPSP2x86 pstree
+python2 vol.py -f zeus2x4.vmem —profile WinXPSP2x86 connections
+python2 vol.py -f zeus2x4.vmem —profile WinXPSP2x86 connscan
+python2 vol.py -f zeus2x4.vmem —profile WinXPSP2x86 psscan | grep 1752
+python2 vol.py -f zeus2x4.vmem —profile WinXPSP2x86 pstree | grep 1752
+python2 vol.py -f zeus2x4.vmem —profile WinXPSP2x86 cmdline | grep 1752
+python2 vol.py -f zeus2x4.vmem —profile WinXPSP2x86 malfind -p 1752
+mkdir procdump
+python2 vol.py -f zeus2x4.vmem —profile WinXPSP2x86 procdump -p 1752 -D procdump/
+file procdump/executable.1752.exe
+sha256sum procdump/executable.1752.exe
+mkdir vaddump
+python2 vol.py -f zeus2x4.vmem —profile WinXPSP2x86 vaddump -p 1752 -b 0x3080000 -D vaddump/
+sha256sum vaddump/
