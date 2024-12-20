@@ -165,3 +165,74 @@ Results: The memory dump confirmed malicious activity.
 
 This analysis demonstrates the presence of Zeus Banking Trojan through memory analysis, process investigation, and artifact dumping for further correlation with known malware databases.
 
+# Zeus Malware Detection YARA Rule
+## Overview
+Rule Name: Zeus_Advanced
+
+Technical Details
+Rule Structure
+The YARA rule is composed of several key components that work together to identify potential Zeus malware variants:
+Magic Byte Detection
+yaraCopy$PE_magic_byte = "MZ" ascii
+Verifies that the target is a valid Windows Portable Executable (PE) file by checking for the MZ header at offset 0.
+Detection Strings
+The rule looks for the following indicators:
+
+Suspicious File Names
+yaraCopy$file_name = "invoice_2318362983713_823931342io.pdf.exe" ascii
+Targets executables masquerading as PDF documents, a common social engineering tactic.
+Malicious Function Names
+yaraCopy$function_name = "CellrotoCrudUntohighCols" ascii
+Identifies specific function names associated with Zeus variants.
+Binary Patterns
+yaraCopy$hex_string = {43 61 6D 65 56 61 6C 65 57 61 75 6C 65 72}
+Matches specific byte sequences found in Zeus malware.
+Network Indicators
+yaraCopy$C2_domain = "zeus-malicious-domain.com" ascii
+Detects known Command & Control (C2) domain patterns.
+Process Artifacts
+yaraCopy$mutex_name = "Global\\ZeusMutex" ascii
+Identifies mutex names used by Zeus for process management.
+## API Usage
+yaraCopy$malicious_API = "InternetOpenA" ascii
+Detects potentially malicious Windows API calls commonly used by Zeus.
+
+## Condition Logic
+yaraCopycondition:
+    $PE_magic_byte at 0 and
+    ($file_name or $function_name or $hex_string or $C2_domain or $mutex_name or $malicious_API)
+The rule triggers when:
+
+The file is a valid PE file (MZ header at offset 0)
+AND at least one of the defined indicators is present
+
+## Usage
+Basic Scanning
+To scan a specific file with this rule:
+bashCopyyara Zeus_Advanced.yar /path/to/suspicious/file
+Example
+bashCopyyara Zeus_Advanced.yar invoice_2318362983713_823931342io.pdf.exe
+Detection Strategy
+This rule implements a multi-faceted detection approach:
+
+## Validates file format (PE structure)
+Checks for social engineering indicators in filenames
+Searches for known malicious code patterns
+Identifies network communication attempts
+Detects process manipulation techniques
+Monitors suspicious API usage
+
+## Notes
+
+The rule is designed to be flexible, allowing for detection even if only some indicators are present
+False positives may occur with legitimate files using similar API calls
+Regular updates to C2 domains and file patterns are recommended
+Consider this rule as part of a broader detection strategy
+
+## Contributing
+To enhance this rule, consider:
+
+Adding new Zeus variant signatures
+Updating C2 domain patterns
+Including additional API call patterns
+Improving condition logic for better accuracy
