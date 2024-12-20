@@ -30,6 +30,17 @@ Using Suricata to monitor network traffic and use the default rules to detect co
 ## Logs created
 ![image](https://github.com/user-attachments/assets/ad206dfe-f418-49a6-9ec4-a04ad9ab5f47)
 
+# Splunk 
+
+## Ingesting Suricata logs and system logs into Splunk.
+![image](https://github.com/user-attachments/assets/50321962-ccc7-4a6e-931c-656766088825)
+
+## We used event_type = alert, which returned some events all with "Network trojan was detected!" and "Blocked trojan communication".
+![image](https://github.com/user-attachments/assets/dfa3c7e5-ea8c-4a68-b166-b933455e2454)
+![image](https://github.com/user-attachments/assets/43ada466-e9fc-4c51-ae86-eb7c9fb7c650)
+
+## Creating visual dashboards in Splunk to monitor malicious activity, highlighting the timestamps of alert generation.
+![image](https://github.com/user-attachments/assets/7d76b2c8-6375-4c37-8be9-6a475f2f6e4f)
 
 # Memory Analysis for Detecting Zeus Banking Trojan
 
